@@ -6,7 +6,7 @@
 <title>JARVIS</title>
 <meta name="robots" content="noindex, nofollow">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; connect-src https://jmocdvnidiuqdxckddfr.supabase.co; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; media-src blob: data: mediastream:; connect-src https://jmocdvnidiuqdxckddfr.supabase.co https://api.openai.com; base-uri 'none'; form-action 'none'">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -18,43 +18,47 @@
 :root{--bg:#080e1a;--panel:#111a2b;--line:#22304a;--fg:#e8eefb;--mute:#8ea0bf;--acc:#38d6ff;--ok:#3ddc97;--bad:#ff6b6b;--warn:#ffc857}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
-body{min-height:100dvh;padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) max(24px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left))}
-main{max-width:560px;margin:0 auto}
-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
-h1{font-size:22px;letter-spacing:.14em;margin:0;font-weight:700}
-h1 span{color:var(--acc)}
+body{min-height:100dvh;padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) max(20px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left));display:flex;flex-direction:column}
+main{max-width:560px;width:100%;margin:0 auto;flex:1;display:flex;flex-direction:column}
+header{display:flex;align-items:center;justify-content:space-between}
+h1{font-size:22px;letter-spacing:.14em;margin:0;font-weight:700}h1 span{color:var(--acc)}
 .pill{font-size:12px;padding:4px 10px;border-radius:999px;border:1px solid var(--line);color:var(--mute);display:flex;gap:6px;align-items:center}
 .dot{width:8px;height:8px;border-radius:50%;background:var(--mute)}
 .pill.on .dot{background:var(--ok)}.pill.on{color:var(--fg)}.pill.off .dot{background:var(--bad)}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:14px}
-label{display:block;font-size:13px;color:var(--mute);margin-bottom:6px}
-textarea,input{width:100%;font:inherit;font-size:17px;color:var(--fg);background:#0b1424;border:1px solid var(--line);border-radius:12px;padding:12px;outline:none}
-textarea{min-height:96px;resize:none}
-textarea:focus,input:focus{border-color:var(--acc)}
-input.code{text-align:center;font-size:28px;letter-spacing:.2em;text-transform:uppercase}
-.row{display:flex;gap:10px;margin-top:10px}
+.hide{display:none!important}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px;margin-top:14px}
+h2{font-size:13px;color:var(--mute);margin:0 0 8px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+input{width:100%;font:inherit;font-size:28px;letter-spacing:.2em;text-align:center;text-transform:uppercase;color:var(--fg);background:#0b1424;border:1px solid var(--line);border-radius:12px;padding:12px;outline:none}
+input:focus{border-color:var(--acc)}
 button{font:inherit;font-weight:600;border:0;border-radius:12px;padding:13px 16px;color:#04121c;background:var(--acc);cursor:pointer}
 button.sec{background:transparent;color:var(--fg);border:1px solid var(--line)}
 button:disabled{opacity:.5}
-.grow{flex:1}
 .hint{font-size:13px;color:var(--mute);margin:8px 0 0}
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
-.chip{background:#0b1424;color:var(--fg);border:1px solid var(--line);font-weight:500;font-size:14px;padding:8px 12px;border-radius:999px;text-align:left}
-.steps{display:flex;gap:6px;margin:0 0 10px}
-.step{flex:1;text-align:center;font-size:12px;padding:6px 4px;border-radius:8px;background:#0b1424;border:1px solid var(--line);color:var(--mute)}
-.step.done{color:var(--ok);border-color:#1f5a46}.step.now{color:var(--acc);border-color:var(--acc)}.step.bad{color:var(--bad);border-color:#6a2b2b}
-.speak{font-size:17px;white-space:pre-wrap;word-break:break-word}
-.meta{font-size:12px;color:var(--mute);margin-top:8px}
-details{margin-top:10px}summary{color:var(--mute);font-size:13px}
-pre{white-space:pre-wrap;word-break:break-word;font-size:12px;background:#0b1424;border-radius:10px;padding:10px;margin:8px 0 0;max-height:260px;overflow:auto}
-.hist{list-style:none;margin:0;padding:0}
-.hist li{padding:10px 0;border-top:1px solid var(--line);cursor:pointer}
-.hist li:first-child{border-top:0}
-.hist .t{font-size:14px}.hist .s{font-size:12px;color:var(--mute)}
 .err{color:var(--bad);font-size:14px;margin-top:8px;min-height:1em}
-.hide{display:none!important}
-h2{font-size:13px;color:var(--mute);margin:0 0 8px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
 .link{background:none;border:0;color:var(--mute);font-size:13px;font-weight:500;padding:8px 0;text-decoration:underline}
+a.link{color:var(--mute)}
+
+/* palco da conversa */
+#stage{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:12px 0}
+#orbWrap{position:relative;width:min(62vw,260px);aspect-ratio:1}
+#orb{position:absolute;inset:0;border-radius:50%;border:0;padding:0;background:radial-gradient(circle at 35% 30%,#7be6ff,#1b8fb8 55%,#0b3550);box-shadow:0 0 0 0 rgba(56,214,255,.0),0 8px 40px rgba(56,214,255,.25);transition:transform .08s linear,background .3s,box-shadow .3s;color:#04121c;font-weight:700;font-size:17px;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.2}
+#orb span{padding:0 18%}
+#orb.idle{filter:saturate(.7);animation:breathe 3.2s ease-in-out infinite}
+#orb.connecting{animation:breathe 1s ease-in-out infinite;filter:saturate(.8)}
+#orb.listening{box-shadow:0 0 0 10px rgba(56,214,255,.12),0 8px 50px rgba(56,214,255,.45)}
+#orb.speaking{background:radial-gradient(circle at 35% 30%,#9cf5c9,#23a06c 55%,#0c3d2b);box-shadow:0 0 0 10px rgba(61,220,151,.14),0 8px 50px rgba(61,220,151,.45)}
+#orb.thinking{background:radial-gradient(circle at 35% 30%,#ffe29a,#c28f1c 55%,#47360b);box-shadow:0 0 0 10px rgba(255,200,87,.14),0 8px 50px rgba(255,200,87,.4);animation:breathe 1.1s ease-in-out infinite}
+@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+#status{font-size:18px;font-weight:600;min-height:1.4em;text-align:center}
+#sub{font-size:13px;color:var(--mute);text-align:center;min-height:1.2em}
+#caps{width:100%;max-height:34vh;overflow:auto;display:flex;flex-direction:column;gap:8px;padding:2px}
+.line{padding:8px 12px;border-radius:12px;font-size:16px;max-width:92%;word-break:break-word;white-space:pre-wrap}
+.line.u{align-self:flex-end;background:#13233b;color:var(--mute)}
+.line.a{align-self:flex-start;background:var(--panel);border:1px solid var(--line)}
+.line.t{align-self:center;background:transparent;color:var(--warn);font-size:13px;padding:2px 8px}
+#bar{display:flex;gap:10px;justify-content:center;align-items:center;font-size:13px;color:var(--mute);min-height:34px}
+#bar b{color:var(--fg);font-weight:600}
+#dbg{font:11px/1.3 ui-monospace,monospace;color:var(--mute);white-space:pre-wrap;max-height:22vh;overflow:auto;background:#0b1424;border-radius:8px;padding:6px;margin-top:8px}
 </style>
 </head>
 <body>
@@ -67,59 +71,45 @@ h2{font-size:13px;color:var(--mute);margin:0 0 8px;font-weight:600;letter-spacin
 <section id="pair" class="hide">
   <div class="card">
     <h2>Parear este aparelho</h2>
-    <p style="margin-top:0">No computador da JAM, rode <b>Parear JARVIS</b> (duplo clique em <code>parear-jarvis.cmd</code>). Digite aqui o código de 8 caracteres que aparecer.</p>
-    <label for="code">Código de pareamento</label>
-    <input id="code" class="code" inputmode="text" autocapitalize="characters" autocomplete="off" autocorrect="off" spellcheck="false" maxlength="9" placeholder="XXXX-XXXX">
-    <div class="row"><button id="pairBtn" class="grow">Parear</button></div>
+    <p style="margin-top:0">No computador da JAM, dê duplo clique em <b>parear-jarvis.cmd</b> e digite aqui o código de 8 caracteres.</p>
+    <input id="code" inputmode="text" autocapitalize="characters" autocomplete="off" autocorrect="off" spellcheck="false" maxlength="9" placeholder="XXXX-XXXX">
+    <div style="margin-top:10px"><button id="pairBtn" style="width:100%">Parear</button></div>
     <div class="err" id="pairErr"></div>
-    <p class="hint">O código vale 10 minutos e só funciona uma vez. Depois de parear, este aparelho fica autorizado até você sair dele.</p>
+    <p class="hint">O código vale 10 minutos e só funciona uma vez.</p>
   </div>
 </section>
 
-<section id="app" class="hide">
-  <div class="card">
-    <h2>Comando</h2>
-    <div class="chips" id="chips"></div>
-    <label for="cmd">Fale ou escreva o que o JARVIS deve fazer</label>
-    <textarea id="cmd" enterkeyhint="send" autocomplete="off" placeholder="Ex.: verifica se existem materiais pendentes no Fotos Marketing CNG"></textarea>
-    <div class="row">
-      <button id="mic" class="sec hide" aria-label="Ditar">🎤</button>
-      <button id="send" class="grow">Enviar</button>
-    </div>
-    <p class="hint">Para ditar, toque no microfone do teclado do iPhone.</p>
-    <div class="err" id="err"></div>
+<section id="app" class="hide" style="flex:1;display:flex;flex-direction:column">
+  <div id="stage">
+    <div id="orbWrap"><button id="orb" class="idle" aria-label="Conversar com o JARVIS"><span id="orbTxt">Toque para conversar</span></button></div>
+    <div id="status">Pronto</div>
+    <div id="sub"></div>
+    <div id="caps" aria-live="polite"></div>
+    <div id="bar"></div>
+    <div class="err" id="err" style="text-align:center"></div>
   </div>
-
-  <div class="card hide" id="result">
-    <h2>Resposta</h2>
-    <div class="steps" id="steps"></div>
-    <div class="speak" id="speak"></div>
-    <div class="meta" id="meta"></div>
-    <details id="det" class="hide"><summary>Detalhes técnicos</summary><pre id="raw"></pre></details>
+  <div style="text-align:center">
+    <p class="hint" id="hint">Toque no círculo uma vez e converse normalmente. Para parar, toque de novo.</p>
+    <a class="link" href="diagnostico.html">Diagnóstico (modo texto)</a> · <button class="link" id="unpair">Sair deste aparelho</button>
+    <div id="dbg" class="hide"></div>
   </div>
-
-  <div class="card">
-    <h2>Últimos comandos</h2>
-    <ul class="hist" id="hist"></ul>
-    <p class="hint" id="histEmpty">Nenhum comando ainda.</p>
-  </div>
-  <button class="link" id="unpair">Sair deste aparelho</button>
 </section>
 </main>
 <script>
 "use strict";
-const API = "https://jmocdvnidiuqdxckddfr.supabase.co/rest/v1/rpc/";
-const KEY = "sb_publishable_qi57G0EJIF8hcEwhlsp9Sg_6rZgYKJg";   // chave PUBLICÁVEL (pública por desenho); não dá acesso a nada sozinha
+const SB = "https://jmocdvnidiuqdxckddfr.supabase.co";
+const API = SB + "/rest/v1/rpc/";
+const FUNC = SB + "/functions/v1/jarvis-voice";
+const KEY = "sb_publishable_qi57G0EJIF8hcEwhlsp9Sg_6rZgYKJg";   // chave PUBLICÁVEL (pública por desenho). Nenhuma chave da OpenAI existe nesta página.
 const LS = "jarvis.device.v1";
+const DEBUG = location.hash === "#debug";
 const $ = (id) => document.getElementById(id);
-const store = {
-  get() { try { return localStorage.getItem(LS); } catch { return null; } },
-  set(v) { try { localStorage.setItem(LS, v); } catch {} },
-  del() { try { localStorage.removeItem(LS); } catch {} },
-};
+const store = { get() { try { return localStorage.getItem(LS); } catch { return null; } }, set(v) { try { localStorage.setItem(LS, v); } catch {} }, del() { try { localStorage.removeItem(LS); } catch {} } };
 let token = store.get();
-let busy = false, pollTimer = null, listTimer = null;
-const STATE = { recebido: "Recebido", executando: "Executando", concluido: "Concluído", falhou: "Falhou", recusado: "Recusado" };
+const uuid = () => (crypto.randomUUID && crypto.randomUUID()) || String(Date.now()) + Math.random();
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const say = (el, t) => { el.textContent = t || ""; };
+const dbg = (...a) => { if (!DEBUG) return; const d = $("dbg"); d.classList.remove("hide"); d.textContent = (a.join(" ") + "\n" + d.textContent).slice(0, 4000); };
 
 async function rpc(fn, body, retries = 1) {
   for (let i = 0; ; i++) {
@@ -127,117 +117,253 @@ async function rpc(fn, body, retries = 1) {
       const r = await fetch(API + fn, { method: "POST", headers: { apikey: KEY, "Content-Type": "application/json" }, body: JSON.stringify(body) });
       if (!r.ok) throw new Error("HTTP " + r.status);
       const j = await r.json();
-      if (j && j.error === "nao_autorizado" && fn !== "jarvis_pair_redeem" && fn !== "jarvis_unpair") { unpaired(); }
+      if (j && j.error === "nao_autorizado" && fn !== "jarvis_pair_redeem" && fn !== "jarvis_unpair") unpaired();
       return j;
-    } catch (e) { if (i >= retries) throw e; await new Promise((r) => setTimeout(r, 800)); }
+    } catch (e) { if (i >= retries) throw e; await sleep(700); }
   }
 }
-const say = (el, text) => { el.textContent = text || ""; };
 function show() { $("pair").classList.toggle("hide", !!token); $("app").classList.toggle("hide", !token); }
-function unpaired() { token = null; store.del(); clearInterval(listTimer); show(); }
+function unpaired() { token = null; store.del(); if (S) endSession("aparelho_removido"); show(); }
 
-function setAgent(online) {
-  const p = $("agent"); p.className = "pill " + (online ? "on" : "off");
-  say($("agentTxt"), online ? "PC da JAM online" : "PC da JAM offline");
-}
-const fmtTime = (iso) => iso ? new Date(iso).toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit", second: "2-digit" }) : "";
-const secs = (a, b) => (a && b) ? Math.max(0, Math.round((new Date(b) - new Date(a)) / 100) / 10) : null;
-
-function renderTask(t) {
-  $("result").classList.remove("hide");
-  const s = t.state, steps = $("steps"); steps.textContent = "";
-  const final = s === "concluido" ? ["done", "done", "done"] : s === "executando" ? ["done", "now", ""] : s === "recebido" ? ["now", "", ""] : ["done", s === "falhou" ? "bad" : "bad", ""];
-  const names = ["Recebido", s === "recusado" ? "Recusado" : "Executando", s === "falhou" ? "Falhou" : s === "recusado" ? "" : "Concluído"];
-  names.forEach((n, i) => { if (!n) return; const d = document.createElement("div"); d.className = "step " + (final[i] || ""); d.textContent = n; steps.appendChild(d); });
-  say($("speak"), t.speak || "");
-  const dur = secs(t.created_at, t.finished_at);
-  say($("meta"), [fmtTime(t.created_at), dur != null ? "levou " + dur + " s" : "", t.note || ""].filter(Boolean).join(" · "));
-  if (t.result) { say($("raw"), JSON.stringify(t.result, null, 2)); $("det").classList.remove("hide"); } else { $("det").classList.add("hide"); }
-}
-
-async function loadLists() {
-  if (!token) return;
-  try {
-    const [rec, sk] = await Promise.all([rpc("jarvis_recent", { p_token: token, p_limit: 8 }), rpc("jarvis_skills_list", { p_token: token })]);
-    if (!rec.ok) return;
-    setAgent(rec.agent_online);
-    const ul = $("hist"); ul.textContent = "";
-    $("histEmpty").classList.toggle("hide", rec.tasks.length > 0);
-    rec.tasks.forEach((t) => {
-      const li = document.createElement("li");
-      const a = document.createElement("div"); a.className = "t"; a.textContent = t.utterance || "";
-      const b = document.createElement("div"); b.className = "s"; b.textContent = (STATE[t.state] || t.state) + " · " + fmtTime(t.created_at);
-      li.append(a, b); li.onclick = () => renderTask(t); ul.appendChild(li);
-    });
-    if (sk.ok) {
-      const c = $("chips"); c.textContent = "";
-      sk.skills.forEach((s) => { if (!s.example) return; const b = document.createElement("button"); b.className = "chip"; b.textContent = s.label; b.onclick = () => { $("cmd").value = s.example; $("cmd").focus(); }; c.appendChild(b); });
-    }
-  } catch { setAgent(false); say($("agentTxt"), "sem conexão"); }
-}
-
-async function send() {
-  const text = $("cmd").value.trim();
-  if (!text || busy) return;
-  busy = true; $("send").disabled = true; say($("err"), "");
-  try {
-    const idem = (crypto.randomUUID && crypto.randomUUID()) || String(Date.now()) + Math.random();
-    let t = await rpc("jarvis_submit", { p_token: token, p_utterance: text, p_idem: idem });
-    if (!t.ok) { say($("err"), t.speak || "Não foi possível enviar."); return; }
-    setAgent(t.agent_online);
-    renderTask(t);
-    const started = Date.now();
-    while (t.done !== "sim" && Date.now() - started < 120000) {
-      await new Promise((r) => setTimeout(r, 1500));
-      const n = await rpc("jarvis_status", { p_token: token, p_id: t.id }, 2);
-      if (!n.ok) break;
-      t = n; renderTask(t); setAgent(t.agent_online);
-    }
-    if (t.done !== "sim") say($("err"), "O PC ainda não terminou. Veja o resultado em “Últimos comandos”.");
-    else $("cmd").value = "";
-  } catch { say($("err"), "Sem conexão com o servidor. Tente de novo."); }
-  finally { busy = false; $("send").disabled = false; loadLists(); }
-}
-
+/* ---------- pareamento ---------- */
 async function pair() {
   const code = $("code").value.trim(); if (!code) return;
   $("pairBtn").disabled = true; say($("pairErr"), "");
   try {
-    const label = /iPhone/.test(navigator.userAgent) ? "iPhone (web JARVIS)" : "Navegador (web JARVIS)";
-    const r = await rpc("jarvis_pair_redeem", { p_code: code, p_label: label });
-    if (r.ok && r.token) { token = r.token; store.set(token); $("code").value = ""; show(); loadLists(); startLists(); }
+    const r = await rpc("jarvis_pair_redeem", { p_code: code, p_label: /iPhone/.test(navigator.userAgent) ? "iPhone (JARVIS voz)" : "Navegador (JARVIS voz)" });
+    if (r.ok && r.token) { token = r.token; store.set(token); $("code").value = ""; show(); refreshAgent(); }
     else say($("pairErr"), r.speak || "Não foi possível parear.");
   } catch { say($("pairErr"), "Sem conexão com o servidor."); }
   finally { $("pairBtn").disabled = false; }
 }
-function startLists() { clearInterval(listTimer); listTimer = setInterval(() => { if (!document.hidden) loadLists(); }, 20000); }
-
-$("send").onclick = send;
-$("cmd").addEventListener("keydown", (e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(); } });
 $("pairBtn").onclick = pair;
 $("code").addEventListener("keydown", (e) => { if (e.key === "Enter") pair(); });
 $("unpair").onclick = async () => { if (!confirm("Sair deste aparelho? Será preciso um novo código para voltar.")) return; try { await rpc("jarvis_unpair", { p_token: token }, 0); } catch {} unpaired(); };
-document.addEventListener("visibilitychange", () => { if (!document.hidden) loadLists(); });
 
-// Ditado direto pelo navegador, quando disponível (o microfone do teclado do iPhone sempre funciona).
-const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-if (SR) {
-  const mic = $("mic"); mic.classList.remove("hide"); let rec = null;
-  mic.onclick = () => {
-    if (rec) { rec.stop(); return; }
-    try {
-      rec = new SR(); rec.lang = "pt-BR"; rec.interimResults = true; rec.continuous = false;
-      mic.textContent = "⏹"; const base = $("cmd").value ? $("cmd").value + " " : "";
-      rec.onresult = (ev) => { let s = ""; for (const r of ev.results) s += r[0].transcript; $("cmd").value = base + s; };
-      rec.onend = () => { rec = null; mic.textContent = "🎤"; };
-      rec.onerror = () => { say($("err"), "Ditado indisponível aqui; use o microfone do teclado."); };
-      rec.start();
-    } catch { rec = null; mic.textContent = "🎤"; }
-  };
+/* ---------- PC online ---------- */
+function setAgent(online) { $("agent").className = "pill " + (online ? "on" : "off"); say($("agentTxt"), online ? "PC da JAM online" : "PC da JAM offline"); }
+async function refreshAgent() { if (!token) return; try { const r = await rpc("jarvis_computer_status", { p_token: token }, 0); if (r.ok) setAgent(r.agent_online); } catch { setAgent(false); } }
+setInterval(() => { if (!document.hidden && !S) refreshAgent(); }, 20000);
+
+/* ---------- legendas / estado visual ---------- */
+let lines = [];
+function addLine(role, text, append) {
+  const last = lines[lines.length - 1];
+  if (append && last && last.role === role) last.text += text; else lines.push({ role, text });
+  if (lines.length > 8) lines.shift();
+  const box = $("caps"); box.textContent = "";
+  lines.forEach((l) => { const d = document.createElement("div"); d.className = "line " + l.role; d.textContent = l.text; box.appendChild(d); });
+  box.scrollTop = box.scrollHeight;
+}
+function setMode(mode, label, sub) {
+  const o = $("orb"); o.className = mode;
+  say($("status"), label || ""); say($("sub"), sub || "");
+  say($("orbTxt"), mode === "idle" ? "Toque para conversar" : mode === "connecting" ? "Conectando…" : "Encerrar");
+}
+const fmt = (s) => Math.floor(s / 60) + ":" + String(Math.floor(s % 60)).padStart(2, "0");
+const usd = (v) => "US$ " + Number(v || 0).toFixed(3).replace(".", ",");
+
+/* ---------- ferramentas (executadas aqui, autorizadas no banco) ---------- */
+async function runTool(name, args) {
+  if (name === "get_computer_status") return await rpc("jarvis_computer_status", { p_token: token });
+  if (name === "list_capabilities") return await rpc("jarvis_capabilities", { p_token: token });
+  if (name === "run_skill") {
+    let t = await rpc("jarvis_submit_skill", { p_token: token, p_skill: String(args.skill || ""), p_idem: uuid() });
+    const t0 = Date.now();
+    while (t.ok && t.done !== "sim" && Date.now() - t0 < 100000) { await sleep(1500); t = await rpc("jarvis_status", { p_token: token, p_id: t.id }, 2); if (!t.ok) break; }
+    if (!t.ok) return { ok: false, error: t.error };
+    return { ok: true, estado: t.state, concluido: t.done === "sim", resultado: t.speak, observacao: t.note || null, erro: t.error || null };
+  }
+  return { ok: false, error: "ferramenta_desconhecida" };
+}
+const TOOL_LABEL = { get_computer_status: "Consultando o computador da JAM…", list_capabilities: "Conferindo o que sei fazer…", run_skill: "Executando no computador da JAM…" };
+
+/* ---------- sessão de voz ---------- */
+let S = null;
+const send = (o) => { if (S && S.dc && S.dc.readyState === "open") { S.dc.send(JSON.stringify(o)); return true; } return false; };
+
+function uiTick() {
+  if (!S) return;
+  const el = (Date.now() - S.t0) / 1000;
+  const left = Math.max(0, S.max - el);
+  $("bar").textContent = "";
+  const a = document.createElement("span"); a.append("Tempo ", Object.assign(document.createElement("b"), { textContent: fmt(el) }), " de " + fmt(S.max));
+  const b = document.createElement("span"); b.append("Custo ≈ ", Object.assign(document.createElement("b"), { textContent: usd(S.cost) }));
+  $("bar").append(a, b);
+  if (left <= 0) endSession("limite_da_sessao");
+  else if (Date.now() - S.lastActivity > S.idle * 1000) endSession("inatividade");
+  if (S && S.mic) { /* nível do microfone/voz do JARVIS para animar o círculo */
+    const lvl = Math.max(S.level.out, S.level.in * 0.6);
+    $("orb").style.transform = "scale(" + (1 + Math.min(0.16, lvl * 0.6)).toFixed(3) + ")";
+    const speaking = S.level.out > 0.02;
+    if (speaking) S.lastSpoke = Date.now(), S.lastActivity = Date.now();
+    if (S.level.in > 0.06) S.lastActivity = Date.now();
+    if (S.toolBusy > 0) setMode("thinking", "Consultando…", S.toolText);
+    else if (speaking || Date.now() - S.lastSpoke < 500) setMode("speaking", "JARVIS falando", "Pode interromper falando por cima");
+    else setMode("listening", "Ouvindo", "Fale naturalmente");
+  }
+}
+function levelOf(an, buf) { an.getByteTimeDomainData(buf); let m = 0; for (let i = 0; i < buf.length; i++) m = Math.max(m, Math.abs(buf[i] - 128)); return m / 128; }
+
+async function waitIce(pc, ms = 1500) {
+  if (pc.iceGatheringState === "complete") return;
+  await new Promise((res) => { const t = setTimeout(res, ms); pc.addEventListener("icegatheringstatechange", () => { if (pc.iceGatheringState === "complete") { clearTimeout(t); res(); } }); });
 }
 
+const ERR_TXT = {
+  voz_desativada: "A conversa por voz ainda não foi ativada.", openai_nao_configurada: "A chave da OpenAI ainda não foi configurada no servidor.",
+  limite_diario_de_custo: "O limite diário de custo da voz foi atingido.", limite_mensal_de_custo: "O limite mensal de custo da voz foi atingido.",
+  limite_diario_de_tempo: "O limite diário de tempo de conversa foi atingido.", nao_autorizado: "Aparelho não autorizado. Pareie de novo.",
+};
+
+async function startSession() {
+  if (S) return;
+  say($("err"), ""); lines = []; $("caps").textContent = "";
+  setMode("connecting", "Conectando…", "Permita o microfone se o iPhone pedir");
+  let mic, pc, ac;
+  try {
+    mic = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true } });
+  } catch { setMode("idle", "Pronto"); say($("err"), "Sem acesso ao microfone. Em Ajustes > Safari (ou do app) permita o microfone."); return; }
+  try {
+    ac = new (window.AudioContext || window.webkitAudioContext)(); if (ac.state === "suspended") await ac.resume();
+    const audioEl = document.getElementById("remote") || Object.assign(document.createElement("audio"), { id: "remote", autoplay: true });
+    audioEl.setAttribute("playsinline", ""); audioEl.autoplay = true; document.body.appendChild(audioEl);
+    pc = new RTCPeerConnection();
+    const dc = pc.createDataChannel("oai-events");
+    S = { pc, dc, ac, mic, audioEl, t0: Date.now(), max: 300, idle: 90, cost: 0, tools: 0, usage: { audio_in: 0, audio_in_cached: 0, audio_out: 0, text_in: 0, text_in_cached: 0, text_out: 0 },
+          level: { in: 0, out: 0 }, lastActivity: Date.now(), lastSpoke: 0, toolBusy: 0, toolText: "", seenCalls: new Set(), pending: 0, closedSeen: false, liveSeconds: 0, ending: false, id: null, provider: null, lastReport: Date.now() };
+    mic.getTracks().forEach((t) => pc.addTrack(t, mic));
+    const mAn = ac.createAnalyser(); mAn.fftSize = 512; ac.createMediaStreamSource(mic).connect(mAn); const mBuf = new Uint8Array(mAn.fftSize);
+    let oAn = null, oBuf = null;
+    pc.ontrack = (e) => {
+      audioEl.srcObject = e.streams[0]; audioEl.play().catch(() => {});
+      try { oAn = ac.createAnalyser(); oAn.fftSize = 512; ac.createMediaStreamSource(e.streams[0]).connect(oAn); oBuf = new Uint8Array(oAn.fftSize); } catch {}
+    };
+    S.sample = setInterval(() => { if (!S) return; S.level.in = levelOf(mAn, mBuf); S.level.out = oAn ? levelOf(oAn, oBuf) : 0; }, 80);
+    dc.onmessage = (ev) => { try { onEvent(JSON.parse(ev.data)); } catch (e) { dbg("evento inválido", String(e)); } };
+    dc.onclose = () => { if (S && !S.ending) endSession("conexao_perdida"); };
+    pc.onconnectionstatechange = () => { dbg("pc", pc.connectionState); if (S && (pc.connectionState === "failed" || pc.connectionState === "closed")) endSession("conexao_perdida"); };
+
+    const offer = await pc.createOffer(); await pc.setLocalDescription(offer); await waitIce(pc);
+    const sdp = pc.localDescription.sdp;
+    const r = await fetch(FUNC, { method: "POST", headers: { "Content-Type": "application/json", apikey: KEY }, body: JSON.stringify({ action: "begin", token, sdp }) });
+    const j = await r.json().catch(() => ({ ok: false, error: "resposta_invalida" }));
+    if (!j.ok) { dbg("begin", JSON.stringify(j)); throw Object.assign(new Error(j.error || "falha"), { j }); }
+    S.id = j.session_id; S.provider = j.provider; S.max = j.max_seconds; S.idle = j.idle_seconds || 90; S.t0 = Date.now(); S.lastActivity = Date.now();
+    let answer;
+    if (j.provider === "live") answer = j.answer_sdp;
+    else {
+      const a = await fetch("https://api.openai.com/v1/realtime/calls", { method: "POST", headers: { Authorization: "Bearer " + j.client_secret, "Content-Type": "application/sdp" }, body: sdp });
+      if (!a.ok) throw Object.assign(new Error("openai_sdp_" + a.status), { j: { error: "openai_sdp_" + a.status } });
+      answer = await a.text();
+    }
+    await pc.setRemoteDescription({ type: "answer", sdp: answer });
+    S.tick = setInterval(uiTick, 200);
+    S.report = setInterval(reportNow, 20000);
+    setMode("listening", "Ouvindo", "Fale naturalmente");
+  } catch (e) {
+    const code = (e.j && e.j.error) || e.message;
+    const detail = e.j && e.j.detail ? " (" + String(e.j.detail).slice(0, 140) + ")" : "";
+    say($("err"), (ERR_TXT[code] || "Não consegui iniciar a conversa: " + code) + (DEBUG ? detail : ""));
+    teardown(); setMode("idle", "Pronto");
+  }
+}
+
+function onEvent(m) {
+  const t = m.type;
+  if (DEBUG && !/delta$|audio_buffer|rate_limits/.test(t)) dbg(t);
+  if (!S) return;
+  // --- legendas (GPT-Live) ---
+  if (t === "session.input_transcript.delta") { addLine("u", m.delta || "", true); S.lastActivity = Date.now(); }
+  else if (t === "session.output_transcript.delta") { addLine("a", m.delta || "", true); S.lastActivity = Date.now(); }
+  else if (t === "session.usage.updated") { S.liveSeconds = (m.usage && m.usage.seconds) || S.liveSeconds; }
+  else if (t === "session.closed") { S.closedSeen = true; if (m.usage && m.usage.seconds != null) S.liveSeconds = m.usage.seconds; if (S.waitClosed) S.waitClosed(); if (!S.ending) endSession(m.reason || "encerrada_pelo_servidor"); }
+  else if (t === "error") { dbg("ERRO", JSON.stringify(m.error || m).slice(0, 200)); }
+  // --- legendas (Realtime) ---
+  else if (t === "conversation.item.input_audio_transcription.completed") { addLine("u", (m.transcript || "").trim(), false); S.lastActivity = Date.now(); }
+  else if (t === "response.output_audio_transcript.delta") { addLine("a", m.delta || "", true); }
+  else if (t === "input_audio_buffer.speech_started") { S.lastActivity = Date.now(); lines.push({ role: "u", text: "" }); }
+  else if (t === "response.done") { if (m.response && m.response.usage) addUsage(m.response.usage); }
+  // --- chamadas de ferramenta (Live: dentro de response.event; Realtime: direto) ---
+  const inner = t === "response.event" ? m.event : m;
+  if (inner && inner.type === "response.output_item.done" && inner.item && inner.item.type === "function_call") handleCall(inner.item);
+}
+
+function addUsage(u) {
+  const i = u.input_token_details || {}, o = u.output_token_details || {}, c = i.cached_tokens_details || {};
+  S.usage.audio_in += i.audio_tokens || 0; S.usage.text_in += i.text_tokens || 0;
+  S.usage.audio_in_cached += c.audio_tokens || 0; S.usage.text_in_cached += (c.text_tokens != null ? c.text_tokens : Math.max(0, (i.cached_tokens || 0) - (c.audio_tokens || 0)));
+  S.usage.audio_out += o.audio_tokens || 0; S.usage.text_out += o.text_tokens || 0;
+}
+
+async function handleCall(item) {
+  if (!S || S.seenCalls.has(item.call_id)) return;
+  S.seenCalls.add(item.call_id); S.tools++; S.pending++; S.toolBusy++; S.lastActivity = Date.now();
+  let args = {}; try { args = JSON.parse(item.arguments || "{}"); } catch {}
+  S.toolText = TOOL_LABEL[item.name] || "Consultando…"; addLine("t", S.toolText, false);
+  let out;
+  try { out = await runTool(item.name, args); } catch (e) { out = { ok: false, error: "falha_na_ferramenta" }; }
+  if (!S) return;
+  S.toolBusy--; S.pending--; S.lastActivity = Date.now();
+  let output = JSON.stringify(out); if (output.length > 2500) output = output.slice(0, 2500);
+  if (S.provider === "live") send({ type: "response.item.create", event_id: "tool_" + item.call_id, item: { type: "function_call_output", call_id: item.call_id, output } });
+  else send({ type: "conversation.item.create", item: { type: "function_call_output", call_id: item.call_id, output } });
+  clearTimeout(S.createTimer);
+  S.createTimer = setTimeout(() => { if (S && S.pending === 0) send({ type: "response.create" }); }, 250);
+}
+
+async function reportNow() {
+  if (!S || !S.id) return;
+  try {
+    const secs = S.provider === "live" && S.liveSeconds ? Math.max(S.liveSeconds, 0) : (Date.now() - S.t0) / 1000;
+    const r = await rpc("jarvis_voice_report", { p_token: token, p_session: S.id, p_seconds: secs, p_usage: S.provider === "live" ? null : S.usage, p_tools: S.tools }, 0);
+    if (r && r.cost_usd != null && S) S.cost = r.cost_usd;
+    if (r && r.stop && S) endSession(r.reason || "limite");
+  } catch { /* próxima rodada tenta de novo */ }
+}
+
+function teardown() {
+  if (!S) return;
+  clearInterval(S.tick); clearInterval(S.report); clearInterval(S.sample); clearTimeout(S.createTimer);
+  try { S.mic.getTracks().forEach((t) => t.stop()); } catch {}
+  try { S.dc.close(); } catch {} try { S.pc.close(); } catch {}
+  try { S.audioEl.srcObject = null; } catch {} try { S.ac.close(); } catch {}
+  $("orb").style.transform = "";
+  S = null;
+}
+
+const REASON_TXT = { usuario_encerrou: "Conversa encerrada.", limite_da_sessao: "Tempo máximo da conversa atingido.", inatividade: "Encerrei por silêncio.", conexao_perdida: "A conexão caiu.",
+  limite_diario_de_custo: "Limite diário de custo atingido.", limite_mensal_de_custo: "Limite mensal de custo atingido.", voz_desativada: "A voz foi desativada." };
+
+async function endSession(reason) {
+  if (!S || S.ending) return;
+  const s = S; s.ending = true;
+  setMode("connecting", "Encerrando…", "");
+  if (s.provider === "live" && s.dc.readyState === "open") {
+    await new Promise((res) => { s.waitClosed = res; send({ type: "session.close" }); setTimeout(res, 3000); });
+  }
+  const wall = (Date.now() - s.t0) / 1000;
+  const secs = s.provider === "live" && s.closedSeen ? s.liveSeconds : Math.max(s.liveSeconds || 0, wall);
+  const id = s.id, usage = s.provider === "live" ? null : s.usage, tools = s.tools, confirmed = s.provider === "live" && s.closedSeen;
+  teardown();
+  let txt = REASON_TXT[reason] || "Conversa encerrada.";
+  try {
+    if (id) { const r = await rpc("jarvis_voice_end", { p_token: token, p_session: id, p_seconds: secs, p_usage: usage, p_tools: tools, p_reason: String(reason).slice(0, 60), p_confirmed: confirmed }, 1);
+      if (r && r.ok) txt += " " + fmt(r.seconds) + " · " + usd(r.cost_usd) + (confirmed ? "" : " (estimado)"); }
+  } catch { txt += " (não consegui gravar o custo)"; }
+  setMode("idle", "Pronto", txt); $("bar").textContent = "";
+  refreshAgent();
+}
+
+window.addEventListener("pagehide", () => {
+  if (!S || !S.id || S.ending) return;
+  try { fetch(API + "jarvis_voice_end", { method: "POST", keepalive: true, headers: { apikey: KEY, "Content-Type": "application/json" },
+    body: JSON.stringify({ p_token: token, p_session: S.id, p_seconds: (Date.now() - S.t0) / 1000, p_usage: S.provider === "live" ? null : S.usage, p_tools: S.tools, p_reason: "pagina_fechada", p_confirmed: false }) }); } catch {}
+});
+$("orb").onclick = () => { if (!S) startSession(); else endSession("usuario_encerrou"); };
+
 show();
-if (token) { loadLists(); startLists(); }
+if (token) refreshAgent();
 </script>
 </body>
 </html>
