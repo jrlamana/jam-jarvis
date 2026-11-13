@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>NAYA mini (piloto)</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; media-src blob: data: mediastream:; connect-src https://jmocdvnidiuqdxckddfr.supabase.co https://api.openai.com; base-uri 'none'; form-action 'none'">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="NAYA mini">
+<meta name="theme-color" content="#080e1a">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<link rel="icon" href="data:image/png;base64,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">
+<style>
+:root{--bg:#080e1a;--panel:#111a2b;--line:#22304a;--fg:#e8eefb;--mute:#8ea0bf;--acc:#38d6ff;--ok:#3ddc97;--bad:#ff6b6b;--warn:#ffc857}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+body{min-height:100dvh;padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) max(20px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left));display:flex;flex-direction:column}
+main{max-width:560px;width:100%;margin:0 auto;flex:1;display:flex;flex-direction:column}
+header{display:flex;align-items:center;justify-content:space-between}
+h1{font-size:22px;letter-spacing:.14em;margin:0;font-weight:700}h1 span{color:var(--acc)}
+.pill{font-size:12px;padding:4px 10px;border-radius:999px;border:1px solid var(--line);color:var(--mute);display:flex;gap:6px;align-items:center}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--mute)}
+.pill.on .dot{background:var(--ok)}.pill.on{color:var(--fg)}.pill.off .dot{background:var(--bad)}
+.hide{display:none!important}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px;margin-top:14px}
+h2{font-size:13px;color:var(--mute);margin:0 0 8px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+input{width:100%;font:inherit;font-size:28px;letter-spacing:.2em;text-align:center;text-transform:uppercase;color:var(--fg);background:#0b1424;border:1px solid var(--line);border-radius:12px;padding:12px;outline:none}
+input:focus{border-color:var(--acc)}
+button{font:inherit;font-weight:600;border:0;border-radius:12px;padding:13px 16px;color:#04121c;background:var(--acc);cursor:pointer}
+button.sec{background:transparent;color:var(--fg);border:1px solid var(--line)}
+button:disabled{opacity:.5}
+.hint{font-size:13px;color:var(--mute);margin:8px 0 0}
+.err{color:var(--bad);font-size:14px;margin-top:8px;min-height:1em}
+.link{background:none;border:0;color:var(--mute);font-size:13px;font-weight:500;padding:8px 0;text-decoration:underline}
+a.link{color:var(--mute)}
+
+/* palco da conversa */
+#stage{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:12px 0}
+#orbWrap{position:relative;width:min(62vw,260px);aspect-ratio:1}
+#orb{position:absolute;inset:0;border-radius:50%;border:0;padding:0;background:radial-gradient(circle at 35% 30%,#7be6ff,#1b8fb8 55%,#0b3550);box-shadow:0 0 0 0 rgba(56,214,255,.0),0 8px 40px rgba(56,214,255,.25);transition:transform .08s linear,background .3s,box-shadow .3s;color:#04121c;font-weight:700;font-size:17px;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.2}
+#orb span{padding:0 18%}
+#orb.idle{filter:saturate(.7);animation:breathe 3.2s ease-in-out infinite}
+#orb.connecting{animation:breathe 1s ease-in-out infinite;filter:saturate(.8)}
+#orb.listening{box-shadow:0 0 0 10px rgba(56,214,255,.12),0 8px 50px rgba(56,214,255,.45)}
+#orb.speaking{background:radial-gradient(circle at 35% 30%,#9cf5c9,#23a06c 55%,#0c3d2b);box-shadow:0 0 0 10px rgba(61,220,151,.14),0 8px 50px rgba(61,220,151,.45)}
+#orb.thinking{background:radial-gradient(circle at 35% 30%,#ffe29a,#c28f1c 55%,#47360b);box-shadow:0 0 0 10px rgba(255,200,87,.14),0 8px 50px rgba(255,200,87,.4);animation:breathe 1.1s ease-in-out infinite}
+@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+#status{font-size:18px;font-weight:600;min-height:1.4em;text-align:center}
+#sub{font-size:13px;color:var(--mute);text-align:center;min-height:1.2em}
+#caps{width:100%;max-height:34vh;overflow:auto;display:flex;flex-direction:column;gap:8px;padding:2px}
+.line{padding:8px 12px;border-radius:12px;font-size:16px;max-width:92%;word-break:break-word;white-space:pre-wrap}
+.line.u{align-self:flex-end;background:#13233b;color:var(--mute)}
+.line.a{align-self:flex-start;background:var(--panel);border:1px solid var(--line)}
+.line.t{align-self:center;background:transparent;color:var(--warn);font-size:13px;padding:2px 8px}
+#bar{display:flex;gap:10px;justify-content:center;align-items:center;font-size:13px;color:var(--mute);min-height:34px}
+#bar b{color:var(--fg);font-weight:600}
+#dbg{font:11px/1.3 ui-monospace,monospace;color:var(--mute);white-space:pre-wrap;max-height:22vh;overflow:auto;background:#0b1424;border-radius:8px;padding:6px;margin-top:8px}
+</style>
+</head>
+<body>
+<main>
+<header>
+  <h1>NAYA <span>mini</span></h1>
+  <div class="pill" id="agent"><span class="dot"></span><span id="agentTxt">…</span></div>
+</header>
+
+<section id="pair" class="hide">
+  <div class="card">
+    <h2>Parear este aparelho</h2>
+    <p style="margin-top:0">No computador da JAM, dê duplo clique em <b>parear-jarvis.cmd</b> e digite aqui o código de 8 caracteres.</p>
+    <input id="code" inputmode="text" autocapitalize="characters" autocomplete="off" autocorrect="off" spellcheck="false" maxlength="9" placeholder="XXXX-XXXX">
+    <div style="margin-top:10px"><button id="pairBtn" style="width:100%">Parear</button></div>
+    <div class="err" id="pairErr"></div>
+    <p class="hint">O código vale 10 minutos e só funciona uma vez.</p>
+  </div>
+</section>
+
+<section id="app" class="hide" style="flex:1;display:flex;flex-direction:column">
+  <div id="stage">
+    <div id="orbWrap"><button id="orb" class="idle" aria-label="Conversar com o JARVIS"><span id="orbTxt">Toque para conversar</span></button></div>
+    <div id="status">Pronto</div>
+    <div id="sub"></div>
+    <div id="caps" aria-live="polite"></div>
+    <div id="bar"></div>
+    <div class="err" id="err" style="text-align:center"></div>
+  </div>
+  <div style="text-align:center">
+    <p class="hint" id="hint">Toque no círculo uma vez e converse normalmente. Para parar, toque de novo.</p>
+    <a class="link" href="diagnostico.html">Diagnóstico (modo texto)</a> · <button class="link" id="unpair">Sair deste aparelho</button>
+    <div id="dbg" class="hide"></div>
+  </div>
+</section>
+</main>
+<script>
+"use strict";
+const SB = "https://jmocdvnidiuqdxckddfr.supabase.co";
+const API = SB + "/rest/v1/rpc/";
+const FUNC = SB + "/functions/v1/jarvis-voice";
+const KEY = "sb_publishable_qi57G0EJIF8hcEwhlsp9Sg_6rZgYKJg";   // chave PUBLICÁVEL (pública por desenho). Nenhuma chave da OpenAI existe nesta página.
+const LS = "jarvis.device.v1";
+const DEBUG = location.hash === "#debug";
+const $ = (id) => document.getElementById(id);
+const store = { get() { try { return localStorage.getItem(LS); } catch { return null; } }, set(v) { try { localStorage.setItem(LS, v); } catch {} }, del() { try { localStorage.removeItem(LS); } catch {} } };
+let token = store.get();
+const uuid = () => (crypto.randomUUID && crypto.randomUUID()) || String(Date.now()) + Math.random();
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const say = (el, t) => { el.textContent = t || ""; };
+const dbg = (...a) => { if (!DEBUG) return; const d = $("dbg"); d.classList.remove("hide"); d.textContent = (a.join(" ") + "\n" + d.textContent).slice(0, 4000); };
+
+async function rpc(fn, body, retries = 1) {
+  for (let i = 0; ; i++) {
+    try {
+      const r = await fetch(API + fn, { method: "POST", headers: { apikey: KEY, "Content-Type": "application/json" }, body: JSON.stringify(body) });
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      const j = await r.json();
+      if (j && j.error === "nao_autorizado" && fn !== "jarvis_pair_redeem" && fn !== "jarvis_unpair") unpaired();
+      return j;
+    } catch (e) { if (i >= retries) throw e; await sleep(700); }
+  }
+}
+function show() { $("pair").classList.toggle("hide", !!token); $("app").classList.toggle("hide", !token); }
+function unpaired() { token = null; store.del(); if (S) endSession("aparelho_removido"); show(); }
+
+/* ---------- pareamento ---------- */
+async function pair() {
+  const code = $("code").value.trim(); if (!code) return;
+  $("pairBtn").disabled = true; say($("pairErr"), "");
+  try {
+    const r = await rpc("jarvis_pair_redeem", { p_code: code, p_label: /iPhone/.test(navigator.userAgent) ? "iPhone (JARVIS voz)" : "Navegador (JARVIS voz)" });
+    if (r.ok && r.token) { token = r.token; store.set(token); $("code").value = ""; show(); refreshAgent(); }
+    else say($("pairErr"), r.speak || "Não foi possível parear.");
+  } catch { say($("pairErr"), "Sem conexão com o servidor."); }
+  finally { $("pairBtn").disabled = false; }
+}
+$("pairBtn").onclick = pair;
+$("code").addEventListener("keydown", (e) => { if (e.key === "Enter") pair(); });
+$("unpair").onclick = async () => { if (!confirm("Sair deste aparelho? Será preciso um novo código para voltar.")) return; try { await rpc("jarvis_unpair", { p_token: token }, 0); } catch {} unpaired(); };
+
+/* ---------- PC online ---------- */
+function setAgent(online) { $("agent").className = "pill " + (online ? "on" : "off"); say($("agentTxt"), online ? "PC da JAM online" : "PC da JAM offline"); }
+async function refreshAgent() { if (!token) return; try { const r = await rpc("jarvis_computer_status", { p_token: token }, 0); if (r.ok) setAgent(r.agent_online); } catch { setAgent(false); } }
+setInterval(() => { if (!document.hidden && !S) refreshAgent(); }, 20000);
+
+/* ---------- legendas / estado visual ---------- */
+let lines = [];
+function addLine(role, text, append) {
+  const last = lines[lines.length - 1];
+  if (append && last && last.role === role) last.text += text; else lines.push({ role, text });
+  if (lines.length > 8) lines.shift();
+  const box = $("caps"); box.textContent = "";
+  lines.forEach((l) => { const d = document.createElement("div"); d.className = "line " + l.role; d.textContent = l.text; box.appendChild(d); });
+  box.scrollTop = box.scrollHeight;
+}
+function setMode(mode, label, sub) {
+  const o = $("orb"); o.className = mode;
+  say($("status"), label || ""); say($("sub"), sub || "");
+  say($("orbTxt"), mode === "idle" ? "Toque para conversar" : mode === "connecting" ? "Conectando…" : "Encerrar");
+}
+const fmt = (s) => Math.floor(s / 60) + ":" + String(Math.floor(s % 60)).padStart(2, "0");
+const usd = (v) => "US$ " + Number(v || 0).toFixed(3).replace(".", ",");
+
+/* ---------- ferramentas (executadas aqui, autorizadas no banco) ---------- */
+async function runTool(name, args) {
+  if (name === "get_computer_status") return await rpc("jarvis_computer_status", { p_token: token });
+  if (name === "list_capabilities") return await rpc("jarvis_capabilities", { p_token: token });
+  if (name === "check_task") { const t = await rpc("jarvis_status", { p_token: token, p_id: null }); return t.ok ? { ok: true, estado: t.state, concluido: t.done === "sim", resultado: t.speak, erro: t.error || null } : { ok: false, error: t.error }; }
+  if (name === "run_skill") return await runSkill(String(args.skill || ""), null);
+  // Google Agenda: parâmetros tipados (o agente do PC valida de novo, com esquema estrito, antes de qualquer coisa).
+  if (AGENDA_TOOLS.indexOf(name) >= 0) {
+    const clean = {};
+    Object.keys(args || {}).forEach((k) => { if (args[k] !== undefined && args[k] !== null && args[k] !== "") clean[k] = args[k]; });
+    const out = await runSkill(name, clean);
+    return out;
+  }
+  return { ok: false, error: "ferramenta_desconhecida" };
+}
+const AGENDA_TOOLS = ["agenda_consultar", "agenda_disponibilidade", "agenda_criar"];
+async function runSkill(skill, args) {
+  let t = await rpc("jarvis_submit_skill", { p_token: token, p_skill: skill, p_idem: uuid(), p_args: args });
+  const t0 = Date.now();
+  while (t.ok && t.done !== "sim" && Date.now() - t0 < 170000) { await sleep(700); t = await rpc("jarvis_status", { p_token: token, p_id: t.id }, 2); if (!t.ok) break; }
+  if (!t.ok) return { ok: false, error: t.error };
+  const out = { ok: true, estado: t.state, concluido: t.done === "sim", resultado: t.speak, observacao: t.note || null, erro: t.error || null };
+  if (args && t.result) out.dados = t.result; // agenda: campos estruturados (criado, precisa_confirmar, eventos, livres…)
+  return out;
+}
+const TOOL_LABEL = { check_task: "Conferindo a última tarefa…", get_computer_status: "Consultando o computador da JAM…", list_capabilities: "Conferindo o que sei fazer…", run_skill: "Executando no computador da JAM…", agenda_consultar: "Consultando sua agenda…", agenda_disponibilidade: "Procurando horários livres…", agenda_criar: "Preparando o evento na agenda…" };
+
+/* ---------- sessão de voz ---------- */
+let S = null;
+const send = (o) => { if (S && S.dc && S.dc.readyState === "open") { S.dc.send(JSON.stringify(o)); return true; } return false; };
+
+function uiTick() {
+  if (!S) return;
+  const el = (Date.now() - S.t0) / 1000;
+  const left = Math.max(0, S.max - el);
+  $("bar").textContent = "";
+  const a = document.createElement("span"); a.append("Tempo ", Object.assign(document.createElement("b"), { textContent: fmt(el) }), " de " + fmt(S.max));
+  const b = document.createElement("span"); b.append("Custo ≈ ", Object.assign(document.createElement("b"), { textContent: usd(S.cost) }));
+  $("bar").append(a, b);
+  if (S.toolBusy > 0) S.lastActivity = Date.now(); // esperar o computador não conta como silêncio
+  if (left <= 0) endSession("limite_da_sessao");
+  else if (Date.now() - S.lastActivity > S.idle * 1000) endSession("inatividade");
+  if (S && S.mic) { /* nível do microfone/voz do JARVIS para animar o círculo */
+    const lvl = Math.max(S.level.out, S.level.in * 0.6);
+    $("orb").style.transform = "scale(" + (1 + Math.min(0.16, lvl * 0.6)).toFixed(3) + ")";
+    const speaking = S.level.out > 0.02;
+    if (speaking) S.lastSpoke = Date.now(), S.lastActivity = Date.now();
+    if (S.level.in > 0.06) S.lastActivity = Date.now();
+    if (S.toolBusy > 0) setMode("thinking", "Consultando…", S.toolText);
+    else if (speaking || Date.now() - S.lastSpoke < 500) setMode("speaking", "JARVIS falando", "Pode interromper falando por cima");
+    else setMode("listening", "Ouvindo", "Fale naturalmente");
+  }
+}
+function levelOf(an, buf) { an.getByteTimeDomainData(buf); let m = 0; for (let i = 0; i < buf.length; i++) m = Math.max(m, Math.abs(buf[i] - 128)); return m / 128; }
+
+async function waitIce(pc, ms = 1500) {
+  if (pc.iceGatheringState === "complete") return;
+  await new Promise((res) => { const t = setTimeout(res, ms); pc.addEventListener("icegatheringstatechange", () => { if (pc.iceGatheringState === "complete") { clearTimeout(t); res(); } }); });
+}
+
+const ERR_TXT = {
+  voz_desativada: "A conversa por voz ainda não foi ativada.", openai_nao_configurada: "A chave da OpenAI ainda não foi configurada no servidor.",
+  limite_diario_de_custo: "O limite diário de custo da voz foi atingido.", limite_mensal_de_custo: "O limite mensal de custo da voz foi atingido.",
+  limite_diario_de_tempo: "O limite diário de tempo de conversa foi atingido.", nao_autorizado: "Aparelho não autorizado. Pareie de novo.",
+};
+
+async function startSession() {
+  if (S) return;
+  say($("err"), ""); lines = []; $("caps").textContent = "";
+  setMode("connecting", "Conectando…", "Permita o microfone se o iPhone pedir");
+  let mic, pc, ac;
+  try {
+    mic = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true } });
+  } catch { setMode("idle", "Pronto"); say($("err"), "Sem acesso ao microfone. Em Ajustes > Safari (ou do app) permita o microfone."); return; }
+  try {
+    ac = new (window.AudioContext || window.webkitAudioContext)(); if (ac.state === "suspended") await ac.resume();
+    const audioEl = document.getElementById("remote") || Object.assign(document.createElement("audio"), { id: "remote", autoplay: true });
+    audioEl.setAttribute("playsinline", ""); audioEl.autoplay = true; document.body.appendChild(audioEl);
+    pc = new RTCPeerConnection();
+    const dc = pc.createDataChannel("oai-events");
+    S = { pc, dc, ac, mic, audioEl, t0: Date.now(), max: 300, idle: 90, cost: 0, tools: 0, usage: { audio_in: 0, audio_in_cached: 0, audio_out: 0, text_in: 0, text_in_cached: 0, text_out: 0 },
+          level: { in: 0, out: 0 }, lastActivity: Date.now(), lastSpoke: 0, toolBusy: 0, toolText: "", seenCalls: new Set(), pending: 0, closedSeen: false, liveSeconds: 0, ending: false, id: null, provider: null, lastReport: Date.now() };
+    mic.getTracks().forEach((t) => pc.addTrack(t, mic));
+    const mAn = ac.createAnalyser(); mAn.fftSize = 512; ac.createMediaStreamSource(mic).connect(mAn); const mBuf = new Uint8Array(mAn.fftSize);
+    let oAn = null, oBuf = null;
+    pc.ontrack = (e) => {
+      audioEl.srcObject = e.streams[0]; audioEl.play().catch(() => {});
+      try { oAn = ac.createAnalyser(); oAn.fftSize = 512; ac.createMediaStreamSource(e.streams[0]).connect(oAn); oBuf = new Uint8Array(oAn.fftSize); } catch {}
+    };
+    S.sample = setInterval(() => { if (!S) return; S.level.in = levelOf(mAn, mBuf); S.level.out = oAn ? levelOf(oAn, oBuf) : 0; }, 80);
+    dc.onmessage = (ev) => { try { onEvent(JSON.parse(ev.data)); } catch (e) { dbg("evento inválido", String(e)); } };
+    dc.onclose = () => { if (S && !S.ending) endSession("conexao_perdida"); };
+    pc.onconnectionstatechange = () => { dbg("pc", pc.connectionState); if (S && (pc.connectionState === "failed" || pc.connectionState === "closed")) endSession("conexao_perdida"); };
+
+    const offer = await pc.createOffer(); await pc.setLocalDescription(offer); await waitIce(pc);
+    const sdp = pc.localDescription.sdp;
+    const r = await fetch(FUNC, { method: "POST", headers: { "Content-Type": "application/json", apikey: KEY }, body: JSON.stringify({ action: "mini_begin", token, sdp }) });
+    const j = await r.json().catch(() => ({ ok: false, error: "resposta_invalida" }));
+    if (!j.ok) { dbg("begin", JSON.stringify(j)); throw Object.assign(new Error(j.error || "falha"), { j }); }
+    S.id = j.session_id; S.provider = j.provider; S.max = j.max_seconds; S.idle = j.idle_seconds || 90; S.t0 = Date.now(); S.lastActivity = Date.now();
+    let answer;
+    if (j.provider === "live") answer = j.answer_sdp;
+    else {
+      const a = await fetch("https://api.openai.com/v1/realtime/calls", { method: "POST", headers: { Authorization: "Bearer " + j.client_secret, "Content-Type": "application/sdp" }, body: sdp });
+      if (!a.ok) throw Object.assign(new Error("openai_sdp_" + a.status), { j: { error: "openai_sdp_" + a.status } });
+      answer = await a.text();
+    }
+    await pc.setRemoteDescription({ type: "answer", sdp: answer });
+    S.tick = setInterval(uiTick, 200);
+    S.report = setInterval(reportNow, 20000);
+    setMode("listening", "Ouvindo", "Fale naturalmente");
+  } catch (e) {
+    const code = (e.j && e.j.error) || e.message;
+    const detail = e.j && e.j.detail ? " (" + String(e.j.detail).slice(0, 140) + ")" : "";
+    say($("err"), (ERR_TXT[code] || "Não consegui iniciar a conversa: " + code) + (DEBUG ? detail : ""));
+    teardown(); setMode("idle", "Pronto");
+  }
+}
+
+let miniN = 0, miniSum = 0;
+function miniLat(ms) {
+  miniN++; miniSum += ms;
+  let el = document.getElementById("lat");
+  if (!el) { el = document.createElement("div"); el.id = "lat"; el.style.cssText = "text-align:center;color:#8ea0bf;font-size:13px;padding:6px"; document.querySelector("main").appendChild(el); }
+  el.textContent = "Fim da fala → voz: " + (ms / 1000).toFixed(1).replace(".", ",") + " s (média " + (miniSum / miniN / 1000).toFixed(1).replace(".", ",") + " s, " + miniN + " turnos)";
+  if (S && S.id) rpc("jarvis_mini_latency", { p_token: token, p_session: S.id, p_ms: ms }, 0).catch(() => {});
+}
+function onEvent(m) {
+  const t = m.type;
+  if (S) {
+    if (t === "input_audio_buffer.speech_stopped") { S.tStop = performance.now(); S.gotFirst = false; }
+    else if (S.tStop && !S.gotFirst && (t === "response.output_audio.delta" || t === "response.output_audio_transcript.delta" || t === "output_audio_buffer.started")) { S.gotFirst = true; miniLat(Math.round(performance.now() - S.tStop)); }
+  }
+  if (DEBUG && !/delta$|audio_buffer|rate_limits/.test(t)) dbg(t);
+  if (!S) return;
+  // --- legendas (GPT-Live) ---
+  if (t === "session.input_transcript.delta") { addLine("u", m.delta || "", true); S.lastActivity = Date.now(); }
+  else if (t === "session.output_transcript.delta") { addLine("a", m.delta || "", true); S.lastActivity = Date.now(); }
+  else if (t === "session.usage.updated") { S.liveSeconds = (m.usage && m.usage.seconds) || S.liveSeconds; }
+  else if (t === "session.closed") { S.closedSeen = true; if (m.usage && m.usage.seconds != null) S.liveSeconds = m.usage.seconds; if (S.waitClosed) S.waitClosed(); if (!S.ending) endSession(m.reason || "encerrada_pelo_servidor"); }
+  else if (t === "error") { dbg("ERRO", JSON.stringify(m.error || m).slice(0, 200)); }
+  // --- legendas (Realtime) ---
+  else if (t === "conversation.item.input_audio_transcription.completed") { addLine("u", (m.transcript || "").trim(), false); S.lastActivity = Date.now(); }
+  else if (t === "response.output_audio_transcript.delta") { addLine("a", m.delta || "", true); }
+  else if (t === "input_audio_buffer.speech_started") { S.lastActivity = Date.now(); lines.push({ role: "u", text: "" }); }
+  else if (t === "response.done") { if (m.response && m.response.usage) addUsage(m.response.usage); }
+  // --- chamadas de ferramenta (Live: dentro de response.event; Realtime: direto) ---
+  const inner = t === "response.event" ? m.event : m;
+  if (inner && inner.type === "response.output_item.done" && inner.item && inner.item.type === "function_call") handleCall(inner.item);
+}
+
+function addUsage(u) {
+  const i = u.input_token_details || {}, o = u.output_token_details || {}, c = i.cached_tokens_details || {};
+  S.usage.audio_in += i.audio_tokens || 0; S.usage.text_in += i.text_tokens || 0;
+  S.usage.audio_in_cached += c.audio_tokens || 0; S.usage.text_in_cached += (c.text_tokens != null ? c.text_tokens : Math.max(0, (i.cached_tokens || 0) - (c.audio_tokens || 0)));
+  S.usage.audio_out += o.audio_tokens || 0; S.usage.text_out += o.text_tokens || 0;
+}
+
+async function handleCall(item) {
+  if (!S || S.seenCalls.has(item.call_id)) return;
+  S.seenCalls.add(item.call_id); S.tools++; S.pending++; S.toolBusy++; S.lastActivity = Date.now();
+  let args = {}; try { args = JSON.parse(item.arguments || "{}"); } catch {}
+  S.toolText = TOOL_LABEL[item.name] || "Consultando…"; addLine("t", S.toolText, false);
+  let out;
+  try { out = await runTool(item.name, args); } catch (e) { out = { ok: false, error: "falha_na_ferramenta" }; }
+  if (!S) return;
+  S.toolBusy--; S.pending--; S.lastActivity = Date.now();
+  let output = JSON.stringify(out); if (output.length > 2500) output = output.slice(0, 2500);
+  if (S.provider === "live") send({ type: "response.item.create", event_id: "tool_" + item.call_id, item: { type: "function_call_output", call_id: item.call_id, output } });
+  else send({ type: "conversation.item.create", item: { type: "function_call_output", call_id: item.call_id, output } });
+  clearTimeout(S.createTimer);
+  S.createTimer = setTimeout(() => { if (S && S.pending === 0) send({ type: "response.create" }); }, 250);
+}
+
+async function reportNow() {
+  if (!S || !S.id) return;
+  try {
+    const secs = S.provider === "live" && S.liveSeconds ? Math.max(S.liveSeconds, 0) : (Date.now() - S.t0) / 1000;
+    const r = await rpc("jarvis_voice_report", { p_token: token, p_session: S.id, p_seconds: secs, p_usage: S.provider === "live" ? null : S.usage, p_tools: S.tools }, 0);
+    if (r && r.cost_usd != null && S) S.cost = r.cost_usd;
+    if (r && r.stop && S) endSession(r.reason || "limite");
+  } catch { /* próxima rodada tenta de novo */ }
+}
+
+function teardown() {
+  if (!S) return;
+  clearInterval(S.tick); clearInterval(S.report); clearInterval(S.sample); clearTimeout(S.createTimer);
+  try { S.mic.getTracks().forEach((t) => t.stop()); } catch {}
+  try { S.dc.close(); } catch {} try { S.pc.close(); } catch {}
+  try { S.audioEl.srcObject = null; } catch {} try { S.ac.close(); } catch {}
+  $("orb").style.transform = "";
+  S = null;
+}
+
+const REASON_TXT = { usuario_encerrou: "Conversa encerrada.", limite_da_sessao: "Tempo máximo da conversa atingido.", inatividade: "Encerrei por silêncio.", conexao_perdida: "A conexão caiu.",
+  limite_diario_de_custo: "Limite diário de custo atingido.", limite_mensal_de_custo: "Limite mensal de custo atingido.", voz_desativada: "A voz foi desativada." };
+
+async function endSession(reason) {
+  if (!S || S.ending) return;
+  const s = S; s.ending = true;
+  setMode("connecting", "Encerrando…", "");
+  if (s.provider === "live" && s.dc.readyState === "open") {
+    await new Promise((res) => { s.waitClosed = res; send({ type: "session.close" }); setTimeout(res, 3000); });
+  }
+  const wall = (Date.now() - s.t0) / 1000;
+  const secs = s.provider === "live" && s.closedSeen ? s.liveSeconds : Math.max(s.liveSeconds || 0, wall);
+  const id = s.id, usage = s.provider === "live" ? null : s.usage, tools = s.tools, confirmed = s.provider === "live" && s.closedSeen;
+  const turns = lines.filter((l) => (l.role === "u" || l.role === "a") && l.text && l.text.trim()).slice(-12).map((l) => ({ r: l.role === "u" ? "u" : "a", t: l.text.trim().slice(0, 250) }));
+  teardown();
+  if (turns.length) { rpc("jarvis_memory_save", { p_token: token, p_turns: turns }, 1).catch(() => {}); } // memória curta (6 h) para continuar a conversa
+  let txt = REASON_TXT[reason] || "Conversa encerrada.";
+  try {
+    if (id) { const r = await rpc("jarvis_voice_end", { p_token: token, p_session: id, p_seconds: secs, p_usage: usage, p_tools: tools, p_reason: String(reason).slice(0, 60), p_confirmed: confirmed }, 1);
+      if (r && r.ok) txt += " " + fmt(r.seconds) + " · " + usd(r.cost_usd) + (confirmed ? " (segundos confirmados; US$ estimado)" : " (estimado)"); }
+  } catch { txt += " (não consegui gravar o custo)"; }
+  setMode("idle", "Pronto", txt); $("bar").textContent = "";
+  refreshAgent();
+}
+
+window.addEventListener("pagehide", () => {
+  if (!S || !S.id || S.ending) return;
+  try { fetch(API + "jarvis_voice_end", { method: "POST", keepalive: true, headers: { apikey: KEY, "Content-Type": "application/json" },
+    body: JSON.stringify({ p_token: token, p_session: S.id, p_seconds: (Date.now() - S.t0) / 1000, p_usage: S.provider === "live" ? null : S.usage, p_tools: S.tools, p_reason: "pagina_fechada", p_confirmed: false }) }); } catch {}
+});
+$("orb").onclick = () => { if (!S) startSession(); else endSession("usuario_encerrou"); };
+
+show();
+if (token) refreshAgent();
+</script>
+</body>
+</html>
