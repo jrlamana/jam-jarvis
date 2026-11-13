@@ -165,6 +165,7 @@ const usd = (v) => "US$ " + Number(v || 0).toFixed(3).replace(".", ",");
 
 /* ---------- ferramentas (executadas aqui, autorizadas no banco) ---------- */
 async function runTool(name, args) {
+  if (name.indexOf("nota_") === 0) return await rpc("jarvis_" + name, { p_token: token, p_args: args || {} }, 0);
   if (name === "get_computer_status") return await rpc("jarvis_computer_status", { p_token: token });
   if (name === "list_capabilities") return await rpc("jarvis_capabilities", { p_token: token });
   if (name === "check_task") { const t = await rpc("jarvis_status", { p_token: token, p_id: null }); return t.ok ? { ok: true, estado: t.state, concluido: t.done === "sim", resultado: t.speak, erro: t.error || null } : { ok: false, error: t.error }; }
@@ -188,7 +189,7 @@ async function runSkill(skill, args) {
   if (args && t.result) out.dados = t.result; // agenda: campos estruturados (criado, precisa_confirmar, eventos, livres…)
   return out;
 }
-const TOOL_LABEL = { check_task: "Conferindo a última tarefa…", get_computer_status: "Consultando o computador da JAM…", list_capabilities: "Conferindo o que sei fazer…", run_skill: "Executando no computador da JAM…", agenda_consultar: "Consultando sua agenda…", agenda_disponibilidade: "Procurando horários livres…", agenda_criar: "Preparando o evento na agenda…" };
+const TOOL_LABEL = { nota_criar: "Anotando…", nota_buscar: "Procurando nas notas…", nota_ler: "Lendo a nota…", nota_complementar: "Acrescentando à nota…", nota_atualizar: "Atualizando a nota…", nota_excluir: "Preparando a exclusão…", check_task: "Conferindo a última tarefa…", get_computer_status: "Consultando o computador da JAM…", list_capabilities: "Conferindo o que sei fazer…", run_skill: "Executando no computador da JAM…", agenda_consultar: "Consultando sua agenda…", agenda_disponibilidade: "Procurando horários livres…", agenda_criar: "Preparando o evento na agenda…" };
 
 /* ---------- sessão de voz ---------- */
 let S = null;
