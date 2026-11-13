@@ -167,16 +167,17 @@ const usd = (v) => "US$ " + Number(v || 0).toFixed(3).replace(".", ",");
 async function runTool(name, args) {
   if (name === "get_computer_status") return await rpc("jarvis_computer_status", { p_token: token });
   if (name === "list_capabilities") return await rpc("jarvis_capabilities", { p_token: token });
+  if (name === "check_task") { const t = await rpc("jarvis_status", { p_token: token, p_id: null }); return t.ok ? { ok: true, estado: t.state, concluido: t.done === "sim", resultado: t.speak, erro: t.error || null } : { ok: false, error: t.error }; }
   if (name === "run_skill") {
     let t = await rpc("jarvis_submit_skill", { p_token: token, p_skill: String(args.skill || ""), p_idem: uuid() });
     const t0 = Date.now();
-    while (t.ok && t.done !== "sim" && Date.now() - t0 < 100000) { await sleep(1500); t = await rpc("jarvis_status", { p_token: token, p_id: t.id }, 2); if (!t.ok) break; }
+    while (t.ok && t.done !== "sim" && Date.now() - t0 < 170000) { await sleep(1500); t = await rpc("jarvis_status", { p_token: token, p_id: t.id }, 2); if (!t.ok) break; }
     if (!t.ok) return { ok: false, error: t.error };
     return { ok: true, estado: t.state, concluido: t.done === "sim", resultado: t.speak, observacao: t.note || null, erro: t.error || null };
   }
   return { ok: false, error: "ferramenta_desconhecida" };
 }
-const TOOL_LABEL = { get_computer_status: "Consultando o computador da JAM…", list_capabilities: "Conferindo o que sei fazer…", run_skill: "Executando no computador da JAM…" };
+const TOOL_LABEL = { check_task: "Conferindo a última tarefa…", get_computer_status: "Consultando o computador da JAM…", list_capabilities: "Conferindo o que sei fazer…", run_skill: "Executando no computador da JAM…" };
 
 /* ---------- sessão de voz ---------- */
 let S = null;
@@ -190,6 +191,7 @@ function uiTick() {
   const a = document.createElement("span"); a.append("Tempo ", Object.assign(document.createElement("b"), { textContent: fmt(el) }), " de " + fmt(S.max));
   const b = document.createElement("span"); b.append("Custo ≈ ", Object.assign(document.createElement("b"), { textContent: usd(S.cost) }));
   $("bar").append(a, b);
+  if (S.toolBusy > 0) S.lastActivity = Date.now(); // esperar o computador não conta como silêncio
   if (left <= 0) endSession("limite_da_sessao");
   else if (Date.now() - S.lastActivity > S.idle * 1000) endSession("inatividade");
   if (S && S.mic) { /* nível do microfone/voz do JARVIS para animar o círculo */
