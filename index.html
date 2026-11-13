@@ -168,16 +168,27 @@ async function runTool(name, args) {
   if (name === "get_computer_status") return await rpc("jarvis_computer_status", { p_token: token });
   if (name === "list_capabilities") return await rpc("jarvis_capabilities", { p_token: token });
   if (name === "check_task") { const t = await rpc("jarvis_status", { p_token: token, p_id: null }); return t.ok ? { ok: true, estado: t.state, concluido: t.done === "sim", resultado: t.speak, erro: t.error || null } : { ok: false, error: t.error }; }
-  if (name === "run_skill") {
-    let t = await rpc("jarvis_submit_skill", { p_token: token, p_skill: String(args.skill || ""), p_idem: uuid() });
-    const t0 = Date.now();
-    while (t.ok && t.done !== "sim" && Date.now() - t0 < 170000) { await sleep(1500); t = await rpc("jarvis_status", { p_token: token, p_id: t.id }, 2); if (!t.ok) break; }
-    if (!t.ok) return { ok: false, error: t.error };
-    return { ok: true, estado: t.state, concluido: t.done === "sim", resultado: t.speak, observacao: t.note || null, erro: t.error || null };
+  if (name === "run_skill") return await runSkill(String(args.skill || ""), null);
+  // Google Agenda: parâmetros tipados (o agente do PC valida de novo, com esquema estrito, antes de qualquer coisa).
+  if (AGENDA_TOOLS.indexOf(name) >= 0) {
+    const clean = {};
+    Object.keys(args || {}).forEach((k) => { if (args[k] !== undefined && args[k] !== null && args[k] !== "") clean[k] = args[k]; });
+    const out = await runSkill(name, clean);
+    return out;
   }
   return { ok: false, error: "ferramenta_desconhecida" };
 }
-const TOOL_LABEL = { check_task: "Conferindo a última tarefa…", get_computer_status: "Consultando o computador da JAM…", list_capabilities: "Conferindo o que sei fazer…", run_skill: "Executando no computador da JAM…" };
+const AGENDA_TOOLS = ["agenda_consultar", "agenda_disponibilidade", "agenda_criar"];
+async function runSkill(skill, args) {
+  let t = await rpc("jarvis_submit_skill", { p_token: token, p_skill: skill, p_idem: uuid(), p_args: args });
+  const t0 = Date.now();
+  while (t.ok && t.done !== "sim" && Date.now() - t0 < 170000) { await sleep(1500); t = await rpc("jarvis_status", { p_token: token, p_id: t.id }, 2); if (!t.ok) break; }
+  if (!t.ok) return { ok: false, error: t.error };
+  const out = { ok: true, estado: t.state, concluido: t.done === "sim", resultado: t.speak, observacao: t.note || null, erro: t.error || null };
+  if (args && t.result) out.dados = t.result; // agenda: campos estruturados (criado, precisa_confirmar, eventos, livres…)
+  return out;
+}
+const TOOL_LABEL = { check_task: "Conferindo a última tarefa…", get_computer_status: "Consultando o computador da JAM…", list_capabilities: "Conferindo o que sei fazer…", run_skill: "Executando no computador da JAM…", agenda_consultar: "Consultando sua agenda…", agenda_disponibilidade: "Procurando horários livres…", agenda_criar: "Preparando o evento na agenda…" };
 
 /* ---------- sessão de voz ---------- */
 let S = null;
