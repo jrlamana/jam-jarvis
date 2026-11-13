@@ -282,18 +282,29 @@ async function startSession() {
   }
 }
 
-let miniN = 0, miniSum = 0;
+let miniN = 0, miniSum = 0, miniForced = 0;
+// Guarda de fim de fala: se o microfone ficou em silêncio de verdade e o servidor não fechou o turno, fecha e pede a resposta.
+setInterval(() => {
+  if (!S || S.ending || !S.userSpeaking || S.forced) return;
+  if (S.level.in >= 0.015) { S.quietSince = 0; return; }
+  if (!S.quietSince) S.quietSince = performance.now();
+  if (performance.now() - S.quietSince > 1800) {
+    S.forced = true; S.userSpeaking = false; S.tStop = S.quietSince; S.gotFirst = false; miniForced++;
+    send({ type: "input_audio_buffer.commit" }); send({ type: "response.create" });
+  }
+}, 250);
 function miniLat(ms) {
   miniN++; miniSum += ms;
   let el = document.getElementById("lat");
   if (!el) { el = document.createElement("div"); el.id = "lat"; el.style.cssText = "text-align:center;color:#8ea0bf;font-size:13px;padding:6px"; document.querySelector("main").appendChild(el); }
-  el.textContent = "Fim da fala → voz: " + (ms / 1000).toFixed(1).replace(".", ",") + " s (média " + (miniSum / miniN / 1000).toFixed(1).replace(".", ",") + " s, " + miniN + " turnos)";
+  el.textContent = "Fim da fala → voz: " + (ms / 1000).toFixed(1).replace(".", ",") + " s (média " + (miniSum / miniN / 1000).toFixed(1).replace(".", ",") + " s, " + miniN + " turnos" + (miniForced ? ", " + miniForced + " com guarda" : "") + ")";
   if (S && S.id) rpc("jarvis_mini_latency", { p_token: token, p_session: S.id, p_ms: ms }, 0).catch(() => {});
 }
 function onEvent(m) {
   const t = m.type;
   if (S) {
-    if (t === "input_audio_buffer.speech_stopped") { S.tStop = performance.now(); S.gotFirst = false; }
+    if (t === "input_audio_buffer.speech_started") { S.userSpeaking = true; S.quietSince = 0; S.forced = false; }
+    else if (t === "input_audio_buffer.speech_stopped") { S.userSpeaking = false; S.tStop = performance.now(); S.gotFirst = false; }
     else if (S.tStop && !S.gotFirst && (t === "response.output_audio.delta" || t === "response.output_audio_transcript.delta" || t === "output_audio_buffer.started")) { S.gotFirst = true; miniLat(Math.round(performance.now() - S.tStop)); }
   }
   if (DEBUG && !/delta$|audio_buffer|rate_limits/.test(t)) dbg(t);
