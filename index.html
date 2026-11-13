@@ -358,7 +358,7 @@ async function endSession(reason) {
   const wall = (Date.now() - s.t0) / 1000;
   const secs = s.provider === "live" && s.closedSeen ? s.liveSeconds : Math.max(s.liveSeconds || 0, wall);
   const id = s.id, usage = s.provider === "live" ? null : s.usage, tools = s.tools, confirmed = s.provider === "live" && s.closedSeen;
-  const turns = lines.filter((l) => l.text && l.text.trim()).slice(-12).map((l) => ({ r: l.role === "u" ? "u" : "a", t: l.text.trim().slice(0, 250) }));
+  const turns = lines.filter((l) => (l.role === "u" || l.role === "a") && l.text && l.text.trim()).slice(-12).map((l) => ({ r: l.role === "u" ? "u" : "a", t: l.text.trim().slice(0, 250) }));
   teardown();
   if (turns.length) { rpc("jarvis_memory_save", { p_token: token, p_turns: turns }, 1).catch(() => {}); } // memória curta (6 h) para continuar a conversa
   let txt = REASON_TXT[reason] || "Conversa encerrada.";
