@@ -182,7 +182,7 @@ const AGENDA_TOOLS = ["agenda_consultar", "agenda_disponibilidade", "agenda_cria
 async function runSkill(skill, args) {
   let t = await rpc("jarvis_submit_skill", { p_token: token, p_skill: skill, p_idem: uuid(), p_args: args });
   const t0 = Date.now();
-  while (t.ok && t.done !== "sim" && Date.now() - t0 < 170000) { await sleep(1500); t = await rpc("jarvis_status", { p_token: token, p_id: t.id }, 2); if (!t.ok) break; }
+  while (t.ok && t.done !== "sim" && Date.now() - t0 < 170000) { await sleep(700); t = await rpc("jarvis_status", { p_token: token, p_id: t.id }, 2); if (!t.ok) break; }
   if (!t.ok) return { ok: false, error: t.error };
   const out = { ok: true, estado: t.state, concluido: t.done === "sim", resultado: t.speak, observacao: t.note || null, erro: t.error || null };
   if (args && t.result) out.dados = t.result; // agenda: campos estruturados (criado, precisa_confirmar, eventos, livres…)
@@ -358,11 +358,13 @@ async function endSession(reason) {
   const wall = (Date.now() - s.t0) / 1000;
   const secs = s.provider === "live" && s.closedSeen ? s.liveSeconds : Math.max(s.liveSeconds || 0, wall);
   const id = s.id, usage = s.provider === "live" ? null : s.usage, tools = s.tools, confirmed = s.provider === "live" && s.closedSeen;
+  const turns = lines.filter((l) => l.text && l.text.trim()).slice(-12).map((l) => ({ r: l.role === "u" ? "u" : "a", t: l.text.trim().slice(0, 250) }));
   teardown();
+  if (turns.length) { rpc("jarvis_memory_save", { p_token: token, p_turns: turns }, 1).catch(() => {}); } // memória curta (6 h) para continuar a conversa
   let txt = REASON_TXT[reason] || "Conversa encerrada.";
   try {
     if (id) { const r = await rpc("jarvis_voice_end", { p_token: token, p_session: id, p_seconds: secs, p_usage: usage, p_tools: tools, p_reason: String(reason).slice(0, 60), p_confirmed: confirmed }, 1);
-      if (r && r.ok) txt += " " + fmt(r.seconds) + " · " + usd(r.cost_usd) + (confirmed ? "" : " (estimado)"); }
+      if (r && r.ok) txt += " " + fmt(r.seconds) + " · " + usd(r.cost_usd) + (confirmed ? " (segundos confirmados; US$ estimado)" : " (estimado)"); }
   } catch { txt += " (não consegui gravar o custo)"; }
   setMode("idle", "Pronto", txt); $("bar").textContent = "";
   refreshAgent();
