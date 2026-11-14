@@ -179,7 +179,7 @@ async function runTool(name, args) {
   }
   return { ok: false, error: "ferramenta_desconhecida" };
 }
-const AGENDA_TOOLS = ["agenda_consultar", "agenda_disponibilidade", "agenda_criar"];
+const AGENDA_TOOLS = ["agenda_consultar", "agenda_disponibilidade", "agenda_criar", "agenda_alterar"];
 async function runSkill(skill, args) {
   let t = await rpc("jarvis_submit_skill", { p_token: token, p_skill: skill, p_idem: uuid(), p_args: args });
   const t0 = Date.now();
@@ -189,7 +189,7 @@ async function runSkill(skill, args) {
   if (args && t.result) out.dados = t.result; // agenda: campos estruturados (criado, precisa_confirmar, eventos, livres…)
   return out;
 }
-const TOOL_LABEL = { nota_criar: "Anotando…", nota_buscar: "Procurando nas notas…", nota_ler: "Lendo a nota…", nota_complementar: "Acrescentando à nota…", nota_atualizar: "Atualizando a nota…", nota_excluir: "Preparando a exclusão…", check_task: "Conferindo a última tarefa…", get_computer_status: "Consultando o computador da JAM…", list_capabilities: "Conferindo o que sei fazer…", run_skill: "Executando no computador da JAM…", agenda_consultar: "Consultando sua agenda…", agenda_disponibilidade: "Procurando horários livres…", agenda_criar: "Preparando o evento na agenda…" };
+const TOOL_LABEL = { nota_criar: "Anotando…", nota_buscar: "Procurando nas notas…", nota_ler: "Lendo a nota…", nota_complementar: "Acrescentando à nota…", nota_atualizar: "Atualizando a nota…", nota_excluir: "Preparando a exclusão…", check_task: "Conferindo a última tarefa…", get_computer_status: "Consultando o computador da JAM…", list_capabilities: "Conferindo o que sei fazer…", run_skill: "Executando no computador da JAM…", agenda_consultar: "Consultando sua agenda…", agenda_disponibilidade: "Procurando horários livres…", agenda_alterar: "Localizando seu compromisso…", agenda_criar: "Preparando o evento na agenda…" };
 
 /* ---------- sessão de voz ---------- */
 let S = null;
